@@ -6,7 +6,7 @@ export function Footer() {
       <div className="container mx-auto px-6 py-16 md:py-20">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
           <div>
-            <h3 className="text-base font-semibold mb-4 tracking-tight">Dermera Labs</h3>
+            <h3 className="text-base font-semibold mb-4 tracking-tight">Renelle Skin</h3>
             <p className="text-sm text-neutral-600 leading-relaxed">
               Premium Canadian skincare delivered monthly to your door.
             </p>
@@ -68,7 +68,7 @@ export function Footer() {
           </div>
         </div>
         <div className="mt-12 pt-8 border-t text-sm text-neutral-500 text-center border-neutral-100">
-          © 2026 Dermera Labs. Made in Canada.
+          © 2026 Renelle Skin. Made in Canada.
         </div>
       </div>
     </footer>

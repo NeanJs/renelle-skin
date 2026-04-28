@@ -1,8 +1,8 @@
-# Dermera Labs Admin Panel
+# Renelle Skin Admin Panel
 
 ## Overview
 
-The admin panel is a complete dashboard system for managing Dermera Labs' e-commerce operations. Built with React, TypeScript, and Tailwind CSS, it follows a clean SaaS dashboard design inspired by Stripe and Linear.
+The admin panel is a complete dashboard system for managing Renelle Skin' e-commerce operations. Built with React, TypeScript, and Tailwind CSS, it follows a clean SaaS dashboard design inspired by Stripe and Linear.
 
 ## Routes
 
@@ -126,7 +126,7 @@ All admin components are built to be reusable:
 
 ## Design System
 
-The admin panel follows the existing Dermera Labs design system:
+The admin panel follows the existing Renelle Skin design system:
 
 - **Colors**: Clinical neutral palette from `theme.css`
 - **Typography**: Existing font hierarchy

@@ -297,7 +297,7 @@ export function KitDetailsPage() {
       <section className="py-16 md:py-24 bg-neutral-50 border-t border-neutral-100">
         <div className="container mx-auto px-6">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-2xl mb-12 tracking-tight">Why Dermera Labs?</h2>
+            <h2 className="text-2xl mb-12 tracking-tight">Why Renelle Skin?</h2>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
               <div>
                 <div className="text-3xl mb-4">🇨🇦</div>

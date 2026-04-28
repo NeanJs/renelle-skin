@@ -34,7 +34,7 @@ export function LandingPage() {
               <div className="aspect-square rounded-2xl overflow-hidden bg-neutral-100 shadow-2xl">
                 <ImageWithFallback
                   src="https://images.unsplash.com/photo-1629732046662-2f03fde8f689?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxza2luY2FyZSUyMHJvdXRpbmUlMjBwcm9kdWN0cyUyMGxpZmVzdHlsZSUyMGNsZWFufGVufDF8fHx8MTc2OTk2ODM2MXww&ixlib=rb-4.1.0&q=80&w=1080"
-                  alt="Dermera Labs Skincare Products"
+                  alt="Renelle Skin Skincare Products"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -200,7 +200,7 @@ export function LandingPage() {
             Ready to Transform Your Skin?
           </h2>
           <p className="text-lg text-neutral-300 mb-10 max-w-2xl mx-auto leading-relaxed">
-            Join thousands of Canadians who trust Dermera Labs for their daily skincare routine
+            Join thousands of Canadians who trust Renelle Skin for their daily skincare routine
           </p>
           <Button asChild size="lg" variant="secondary" className="h-12 px-8 bg-white text-neutral-900 hover:bg-neutral-100">
             <Link to="/subscriptions">Subscribe Now</Link>

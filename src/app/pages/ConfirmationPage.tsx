@@ -39,7 +39,7 @@ export function ConfirmationPage() {
             </div>
             <h1 className="text-3xl mb-2">Subscription Confirmed!</h1>
             <p className="text-neutral-600 mb-6">
-              Thank you for subscribing to Dermera Labs
+              Thank you for subscribing to Renelle Skin
             </p>
             <div className="bg-neutral-50 p-4 rounded-lg inline-block">
               <p className="text-sm text-neutral-600 mb-1">Order Number</p>

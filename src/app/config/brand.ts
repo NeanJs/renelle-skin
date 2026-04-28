@@ -12,7 +12,7 @@ export interface BrandConfig {
 }
 
 export const defaultBrandConfig: BrandConfig = {
-  brandName: 'Dermera Labs',
+  brandName: 'Renelle Skin',
   primaryColor: '#2d2d2d',
   accentColor: '#e7e5e4',
   currency: 'CAD',

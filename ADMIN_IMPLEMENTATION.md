@@ -239,7 +239,7 @@ Three tab sections:
 
 ### Brand Consistency
 
-The admin panel maintains perfect consistency with Dermera Labs' existing design:
+The admin panel maintains perfect consistency with Renelle Skin' existing design:
 - Same color variables from theme.css
 - Same typography scale
 - Same spacing system
