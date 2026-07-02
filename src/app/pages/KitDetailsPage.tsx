@@ -8,7 +8,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@/app/components/ui/accordion';
-import { Check, Package, Truck, CreditCard, Calendar, Shield, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Check, Truck, CreditCard, Calendar, Shield, ChevronRight } from 'lucide-react';
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import { ProductSample } from '@/app/components/ProductSample';
 import { LoadingSpinner } from '@/app/components/Loading';
