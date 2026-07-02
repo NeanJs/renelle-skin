@@ -1,231 +1,26 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "motion/react";
-import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { toast } from "sonner";
+import {
+  Field,
+  PasswordField,
+  SocialButton,
+  Divider,
+  GoogleIcon,
+  AppleIcon,
+  PrimaryButton,
+  validateEmail,
+  validatePassword,
+  validateRequired,
+} from "@/app/components/auth";
 
 type Tab = "login" | "signup";
 
 const HERO =
   "https://images.unsplash.com/photo-1679581356089-e65ea18c7f61?w=1200&h=1800&fit=crop&auto=format&q=80";
 
-// ── Tiny shared input ────────────────────────────────────────────────────────
-interface FieldProps {
-  id: string;
-  label: string;
-  type?: string;
-  value: string;
-  onChange: (v: string) => void;
-  error?: string;
-  placeholder?: string;
-  autoComplete?: string;
-  rightSlot?: React.ReactNode;
-  required?: boolean;
-}
-
-function Field({
-  id,
-  label,
-  type = "text",
-  value,
-  onChange,
-  error,
-  placeholder,
-  autoComplete,
-  rightSlot,
-  required,
-}: FieldProps) {
-  return (
-    <div className="space-y-1.5">
-      <label
-        htmlFor={id}
-        className="block text-xs font-medium text-[#1C1C1C]"
-        style={{ letterSpacing: "0.02em" }}
-      >
-        {label}
-        {required && <span className="text-[#C4836A] ml-0.5">*</span>}
-      </label>
-      <div className="relative">
-        <input
-          id={id}
-          type={type}
-          value={value}
-          onChange={(e) => onChange(e.target.value)}
-          placeholder={placeholder}
-          autoComplete={autoComplete}
-          className={`w-full h-12 px-4 text-sm bg-[#FAFAF9] border rounded-xl outline-none transition-all placeholder:text-[#B8B4AE] ${
-            error
-              ? "border-[#C4836A] focus:border-[#C4836A] focus:ring-2 focus:ring-[#C4836A]/15"
-              : "border-[#E5E2DC] focus:border-[#0A0A0A] focus:ring-2 focus:ring-[#0A0A0A]/8"
-          } ${rightSlot ? "pr-11" : ""}`}
-          style={{ fontFamily: "'DM Sans', sans-serif" }}
-          aria-invalid={!!error}
-          aria-describedby={error ? `${id}-error` : undefined}
-        />
-        {rightSlot && (
-          <div className="absolute right-3 top-1/2 -translate-y-1/2">
-            {rightSlot}
-          </div>
-        )}
-      </div>
-      <AnimatePresence>
-        {error && (
-          <motion.p
-            id={`${id}-error`}
-            role="alert"
-            initial={{ opacity: 0, y: -4 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -4 }}
-            transition={{ duration: 0.15 }}
-            className="text-xs text-[#C4836A]"
-          >
-            {error}
-          </motion.p>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-}
-
-// ── Password field with show/hide ────────────────────────────────────────────
-function PasswordField({
-  id,
-  label,
-  value,
-  onChange,
-  error,
-  autoComplete,
-  placeholder,
-}: Omit<FieldProps, "type" | "rightSlot">) {
-  const [show, setShow] = useState(false);
-  return (
-    <Field
-      id={id}
-      label={label}
-      type={show ? "text" : "password"}
-      value={value}
-      onChange={onChange}
-      error={error}
-      placeholder={placeholder ?? "••••••••"}
-      autoComplete={autoComplete}
-      required
-      rightSlot={
-        <button
-          type="button"
-          onClick={() => setShow((s) => !s)}
-          className="text-[#B8B4AE] hover:text-[#0A0A0A] transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A0A0A]/30 rounded"
-          aria-label={show ? "Hide password" : "Show password"}
-        >
-          {show ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-        </button>
-      }
-    />
-  );
-}
-
-// ── Social button ────────────────────────────────────────────────────────────
-function SocialButton({
-  provider,
-  icon,
-  onClick,
-}: {
-  provider: string;
-  icon: React.ReactNode;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      onClick={onClick}
-      className="flex items-center justify-center gap-2.5 w-full h-11 border border-[#E5E2DC] rounded-xl bg-white text-sm font-medium text-[#1C1C1C] hover:bg-[#F8F7F5] active:scale-[0.98] transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A0A0A]/20"
-      style={{ fontFamily: "'DM Sans', sans-serif" }}
-    >
-      {icon}
-      Continue with {provider}
-    </button>
-  );
-}
-
-// ── Divider ──────────────────────────────────────────────────────────────────
-function Divider() {
-  return (
-    <div className="flex items-center gap-3 my-5">
-      <div className="flex-1 h-px bg-[#E5E2DC]" />
-      <span
-        className="text-xs text-[#B8B4AE] uppercase tracking-widest"
-        style={{ letterSpacing: "0.12em", fontSize: "0.62rem" }}
-      >
-        or
-      </span>
-      <div className="flex-1 h-px bg-[#E5E2DC]" />
-    </div>
-  );
-}
-
-// ── Google icon ──────────────────────────────────────────────────────────────
-function GoogleIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M17.64 9.2c0-.637-.057-1.251-.164-1.84H9v3.481h4.844a4.14 4.14 0 01-1.796 2.716v2.259h2.908c1.702-1.567 2.684-3.875 2.684-6.615z"
-        fill="#4285F4"
-      />
-      <path
-        d="M9 18c2.43 0 4.467-.806 5.956-2.18l-2.908-2.259c-.806.54-1.837.86-3.048.86-2.344 0-4.328-1.584-5.036-3.711H.957v2.332A8.997 8.997 0 009 18z"
-        fill="#34A853"
-      />
-      <path
-        d="M3.964 10.71A5.41 5.41 0 013.682 9c0-.593.102-1.17.282-1.71V4.958H.957A8.996 8.996 0 000 9c0 1.452.348 2.827.957 4.042l3.007-2.332z"
-        fill="#FBBC05"
-      />
-      <path
-        d="M9 3.58c1.321 0 2.508.454 3.44 1.345l2.582-2.58C13.463.891 11.426 0 9 0A8.997 8.997 0 00.957 4.958L3.964 6.29C4.672 4.163 6.656 3.58 9 3.58z"
-        fill="#EA4335"
-      />
-    </svg>
-  );
-}
-
-// ── Apple icon ───────────────────────────────────────────────────────────────
-function AppleIcon() {
-  return (
-    <svg
-      width="18"
-      height="18"
-      viewBox="0 0 18 18"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path
-        d="M13.068 9.36c-.018-1.854 1.512-2.754 1.584-2.808-0.864-1.26-2.214-1.44-2.7-1.458-1.152-.117-2.25.675-2.835.675-.585 0-1.494-.657-2.448-.639-1.26.018-2.43.738-3.078 1.872-1.314 2.286-.339 5.661.936 7.515.621.9 1.368 1.908 2.34 1.872.936-.036 1.296-.603 2.43-.603 1.134 0 1.458.603 2.448.585.999-.018 1.638-.909 2.25-1.818.711-1.035 1.008-2.043 1.026-2.097-.027-.009-1.962-.756-1.98-2.961l.027.063z"
-        fill="#0A0A0A"
-      />
-      <path
-        d="M11.169 3.402c.513-.63.864-1.503.765-2.376-.738.03-1.638.495-2.169 1.125-.477.549-.9 1.44-.789 2.286.828.063 1.674-.423 2.193-1.035z"
-        fill="#0A0A0A"
-      />
-    </svg>
-  );
-}
-
-// ── Validation helpers ───────────────────────────────────────────────────────
-const validateEmail = (v: string) =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v)
-    ? ""
-    : "Please enter a valid email address.";
-const validatePassword = (v: string) =>
-  v.length >= 8 ? "" : "Password must be at least 8 characters.";
-const validateRequired = (v: string, label: string) =>
-  v.trim() ? "" : `${label} is required.`;
-
-// ── Main component ───────────────────────────────────────────────────────────
 export function AuthPage() {
   const navigate = useNavigate();
   const [tab, setTab] = useState<Tab>("login");
@@ -711,35 +506,5 @@ export function AuthPage() {
         </div>
       </div>
     </div>
-  );
-}
-
-// ── Primary CTA button ────────────────────────────────────────────────────────
-function PrimaryButton({
-  loading,
-  label,
-  loadingLabel,
-}: {
-  loading: boolean;
-  label: string;
-  loadingLabel: string;
-}) {
-  return (
-    <motion.button
-      type="submit"
-      disabled={loading}
-      whileTap={{ scale: loading ? 1 : 0.98 }}
-      className="w-full h-12 rounded-xl bg-[#0A0A0A] text-white text-xs font-medium uppercase tracking-widest flex items-center justify-center gap-2 mt-2 hover:bg-[#1C1C1C] active:bg-[#333] disabled:opacity-60 disabled:cursor-not-allowed transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-[#0A0A0A]/30 focus-visible:ring-offset-2"
-      style={{ letterSpacing: "0.12em", fontFamily: "'DM Sans', sans-serif" }}
-    >
-      {loading ? (
-        <>
-          <Loader2 className="w-4 h-4 animate-spin" />
-          {loadingLabel}
-        </>
-      ) : (
-        label
-      )}
-    </motion.button>
   );
 }
