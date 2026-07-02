@@ -1,7 +1,11 @@
 import { useState } from "react";
+import {
+  SUBSCRIPTION_DISCOUNT_PERCENT,
+  calculateSubscriptionPrice,
+} from "@/app/lib/price-utils";
 
-type PurchaseMethod = "onetime" | "subscribe";
-type Frequency = "4weeks" | "6weeks" | "8weeks";
+export type PurchaseMethod = "onetime" | "subscribe";
+export type Frequency = "4weeks" | "6weeks" | "8weeks";
 
 interface PurchaseMethodSelectorProps {
   regularPrice: number;
@@ -11,8 +15,6 @@ interface PurchaseMethodSelectorProps {
     frequency?: Frequency,
   ) => void;
 }
-
-const SAVE_PCT = 15;
 
 const frequencyLabels: Record<Frequency, string> = {
   "4weeks": "Every 4 weeks",
@@ -27,8 +29,7 @@ export function PurchaseMethodSelector({
   const [method, setMethod] = useState<PurchaseMethod>("onetime");
   const [frequency, setFrequency] = useState<Frequency>("4weeks");
 
-  const subscribePrice =
-    Math.round(regularPrice * (1 - SAVE_PCT / 100) * 100) / 100;
+  const subscribePrice = calculateSubscriptionPrice(regularPrice);
   const activePrice = method === "subscribe" ? subscribePrice : regularPrice;
 
   const handleMethodChange = (next: PurchaseMethod) => {
@@ -124,7 +125,7 @@ export function PurchaseMethodSelector({
                 letterSpacing: "0.04em",
               }}
             >
-              Save {SAVE_PCT}%
+              Save {SUBSCRIPTION_DISCOUNT_PERCENT}%
             </span>
           </div>
         </div>

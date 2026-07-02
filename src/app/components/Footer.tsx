@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Loader2, Check } from "lucide-react";
+import { getNavigationLines } from "@/app/data/product-lines";
 
 export function Footer() {
   const [email, setEmail] = useState("");
   const [done, setDone] = useState(false);
   const [busy, setBusy] = useState(false);
+  const lines = getNavigationLines();
 
   const subscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -106,54 +108,16 @@ export function Footer() {
                   Shop All Products
                 </Link>
               </li>
-              <li>
-                <Link
-                  to="/subscriptions/dsmo"
-                  className="text-sm text-white/70 hover:text-white transition-colors"
-                >
-                  DSMO
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/subscriptions/idhtft"
-                  className="text-sm text-white/70 hover:text-white transition-colors"
-                >
-                  IDHTFT
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/subscriptions/itctc"
-                  className="text-sm text-white/70 hover:text-white transition-colors"
-                >
-                  ITCTC
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/subscriptions/elgom"
-                  className="text-sm text-white/70 hover:text-white transition-colors"
-                >
-                  ELGOM
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/subscriptions/ldit"
-                  className="text-sm text-white/70 hover:text-white transition-colors"
-                >
-                  LDIT
-                </Link>
-              </li>
-              <li>
-                <Link
-                  to="/subscriptions/universal"
-                  className="text-sm text-white/70 hover:text-white transition-colors"
-                >
-                  Universal
-                </Link>
-              </li>
+              {lines.map((line) => (
+                <li key={line.id}>
+                  <Link
+                    to={`/subscriptions/${line.id}`}
+                    className="text-sm text-white/70 hover:text-white transition-colors"
+                  >
+                    {line.code}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

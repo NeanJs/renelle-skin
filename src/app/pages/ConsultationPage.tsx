@@ -66,7 +66,7 @@ const LABEL_STYLE: React.CSSProperties = {
 // ── MAIN COMPONENT ────────────────────────────────────────────────────────────
 export function ConsultationPage() {
   return (
-    <div className="flex-1 bg-white">
+    <div className="flex-1 bg-white max-w-4/6 py-8 flex flex-col ga0 items-center justify-center mx-auto consultation-page">
       <HeroSection />
       <TruthStrip />
       <CatherineSection />
@@ -82,7 +82,7 @@ export function ConsultationPage() {
 // ── 1. HERO ───────────────────────────────────────────────────────────────────
 function HeroSection() {
   return (
-    <section className="relative min-h-[88vh] grid grid-cols-1 lg:grid-cols-2">
+    <section className="relative min-h-[70vh] grid grid-cols-1 lg:grid-cols-2">
       {/* Left — dark editorial text */}
       <div className="bg-[#0A0A0A] flex flex-col justify-center px-10 md:px-16 lg:px-20 py-24 lg:py-0 order-2 lg:order-1">
         <FadeUp delay={0.05}>
@@ -128,13 +128,13 @@ function HeroSection() {
               className="rounded-none bg-white text-[#0A0A0A] hover:bg-white/90 h-12 px-8 text-xs uppercase tracking-widest"
               style={{ letterSpacing: "0.12em" }}
             >
-              <a href="#contact">Book Consultation</a>
+              <a href="#book">Book Consultation</a>
             </Button>
             <Button
               asChild
               variant="outline"
               size="lg"
-              className="rounded-none border-white/20 text-white hover:bg-white/8 h-12 px-8 text-xs uppercase tracking-widest"
+              className="text-[#0A0A0A] rounded-none border-white/20 hover:bg-white/8 h-12 px-8 text-xs uppercase tracking-widest"
               style={{ letterSpacing: "0.12em" }}
             >
               <a href="#catherine">Meet Catherine</a>
@@ -149,7 +149,7 @@ function HeroSection() {
               { label: "Format", value: "Virtual", sub: "Zoom or Meet" },
               {
                 label: "Duration",
-                value: "45 min",
+                value: "30 min",
                 sub: "One focused session",
               },
               {
@@ -262,7 +262,7 @@ function TruthStrip() {
   ];
 
   return (
-    <section className="border-y border-border bg-[#F7F6F4] py-20 md:py-28">
+    <section className="w-full border-y border-border bg-[#F7F6F4] py-20 md:py-28">
       <div className="container mx-auto px-6 max-w-7xl">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-10 lg:gap-12">
           <FadeUp>
@@ -416,7 +416,7 @@ function CatherineSection() {
                   className="rounded-none bg-foreground text-background hover:bg-foreground/85 text-xs uppercase tracking-widest h-11 px-6"
                   style={{ letterSpacing: "0.1em" }}
                 >
-                  <a href="#contact">Book a Consultation</a>
+                  <a href="#book">Book a Consultation</a>
                 </Button>
               </div>
             </FadeUp>

@@ -5,13 +5,7 @@ import { Button } from '@/app/components/ui/button';
 import { Check } from 'lucide-react';
 import { ProductCard } from '@/app/components/ProductCard';
 import { FilterBar, FilterState } from '@/app/components/FilterBar';
-
-const kitImages: Record<string, string> = {
-  starter: 'https://images.unsplash.com/photo-1652464945507-687e44a1017a?w=800&h=800&fit=crop&auto=format',
-  essential: 'https://images.unsplash.com/photo-1617030557822-c8c35f07c60b?w=800&h=800&fit=crop&auto=format',
-  advanced: 'https://images.unsplash.com/photo-1677735476292-0fc57ab097b2?w=800&h=800&fit=crop&auto=format',
-  premium: 'https://images.unsplash.com/photo-1764694187721-a5035d777fdf?w=800&h=800&fit=crop&auto=format',
-};
+import { getKitImage } from '@/app/config/images';
 
 export function SubscriptionsPage() {
   const [sortBy, setSortBy] = useState('recommended');
@@ -80,7 +74,7 @@ export function SubscriptionsPage() {
                   tier={kit.tier}
                   price={kit.price}
                   description={kit.description}
-                  imageUrl={kitImages[kit.id]}
+                  imageUrl={getKitImage(kit.id, 'medium')}
                   recommended={kit.recommended}
                 />
               ))}

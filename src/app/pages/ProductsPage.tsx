@@ -4,58 +4,12 @@ import { Link } from "react-router-dom";
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { Button } from "@/app/components/ui/button";
 import { productLines } from "../data/product-lines";
-
-// Placeholder prices — would come from API in production
-const basePrices: Record<string, number> = {
-  "Cream Cleanser": 38,
-  "Reset Serum": 52,
-  "Light Moisturiser": 58,
-  "Reset Toner": 32,
-  "Clarifying Cleanser": 34,
-  "Clarifying Gel Cleanser": 34,
-  "BHA Exfoliating Toner": 36,
-  "Niacinamide Serum": 48,
-  "Targeted Spot Treatment": 42,
-  "Oil-Control Moisturiser": 56,
-  "SPF 50 Matte Sunscreen": 44,
-  "Clay Purifying Mask": 38,
-  "Milk Cleanser": 38,
-  "Hydrating Essence": 42,
-  "HA Plumping Serum": 55,
-  "Rich Moisturiser": 60,
-  "SPF 30 Hydrating Sunscreen": 44,
-  "Nourishing Eye Cream": 48,
-  "Overnight Barrier Mask": 44,
-  "Peptide Cleanser": 42,
-  "Resurfacing Toner": 46,
-  "Firming Peptide Serum": 78,
-  "Retinol Renewal Treatment": 68,
-  "Lifting Moisturiser": 68,
-  "SPF 50+ Age Defence": 52,
-  "Contour Eye Cream": 62,
-  "Exfoliating Lip Scrub": 22,
-  "Hyaluronic Lip Serum": 38,
-  "Plumping Lip Treatment": 42,
-  "Overnight Lip Mask": 28,
-  "SPF 30 Tinted Lip Balm": 18,
-  "Nourishing Lip Oil": 32,
-  "Multi-Use Face Oil": 55,
-  "Hydrating Mist": 34,
-  "Vitamin C Brightening Serum": 58,
-  "Universal SPF 50": 46,
-  "Restorative Night Oil": 62,
-  "Collagen Boosting Ampoules": 72,
-};
-const DEFAULT_PRICE = 45;
-
-// Product images — cycle through
-const productImages = [
-  "https://images.unsplash.com/photo-1550572017-4b7a301b9d81?w=600&h=600&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1763503836825-97f5450d155a?w=600&h=600&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1768725844772-dc834990526f?w=600&h=600&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1765887986673-953fccf56464?w=600&h=600&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1655357443031-d5e0354b56e1?w=600&h=600&fit=crop&auto=format",
-];
+import { 
+  PRODUCT_PRICES, 
+  DEFAULT_PRODUCT_PRICE, 
+  calculateSubscriptionPrice 
+} from "@/app/lib/price-utils";
+import { getProductImage } from "@/app/config/images";
 
 type KitFilter = "all" | "essential" | "retail";
 
@@ -79,7 +33,7 @@ function buildProductList(): FlatProduct[] {
     for (const kitType of ["essential", "retail"] as const) {
       const kit = line.kits[kitType];
       kit.products.forEach((product, i) => {
-        const price = basePrices[product.name] ?? DEFAULT_PRICE;
+        const price = PRODUCT_PRICES[product.name] ?? DEFAULT_PRODUCT_PRICE;
         items.push({
           line,
           kitType,
@@ -87,8 +41,8 @@ function buildProductList(): FlatProduct[] {
           name: product.name,
           size: product.size,
           price,
-          subscribePrice: Math.round(price * 0.85 * 100) / 100,
-          imageIndex: imageCounter % productImages.length,
+          subscribePrice: calculateSubscriptionPrice(price),
+          imageIndex: imageCounter,
         });
         imageCounter++;
       });
@@ -291,7 +245,7 @@ function ProductCard({ product }: { product: FlatProduct }) {
         style={{ backgroundColor: `${line.secondaryColor}33` }}
       >
         <ImageWithFallback
-          src={productImages[imageIndex]}
+          src={getProductImage(imageIndex, "medium")}
           alt={name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
         />

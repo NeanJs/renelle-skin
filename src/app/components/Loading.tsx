@@ -14,23 +14,3 @@ export function LoadingSpinner({ size = 'md' }: { size?: 'sm' | 'md' | 'lg' }) {
   );
 }
 
-export function LoadingSkeleton() {
-  return (
-    <div className="animate-pulse">
-      <div className="bg-neutral-200 h-64 w-full rounded-lg mb-4" />
-      <div className="bg-neutral-200 h-4 w-3/4 rounded mb-2" />
-      <div className="bg-neutral-200 h-4 w-1/2 rounded" />
-    </div>
-  );
-}
-
-export function ProductCardSkeleton() {
-  return (
-    <div className="animate-pulse">
-      <div className="bg-neutral-200 aspect-square rounded-lg mb-4" />
-      <div className="bg-neutral-200 h-4 w-3/4 rounded mb-2" />
-      <div className="bg-neutral-200 h-3 w-1/2 rounded mb-3" />
-      <div className="bg-neutral-200 h-4 w-1/4 rounded" />
-    </div>
-  );
-}

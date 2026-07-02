@@ -12,21 +12,7 @@ import { Check, Package, Truck, CreditCard, Calendar, Shield, ChevronLeft, Chevr
 import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
 import { ProductSample } from '@/app/components/ProductSample';
 import { LoadingSpinner } from '@/app/components/Loading';
-
-const kitImages: Record<string, string> = {
-  starter: 'https://images.unsplash.com/photo-1652464945507-687e44a1017a?w=900&h=900&fit=crop&auto=format',
-  essential: 'https://images.unsplash.com/photo-1617030557822-c8c35f07c60b?w=900&h=900&fit=crop&auto=format',
-  advanced: 'https://images.unsplash.com/photo-1677735476292-0fc57ab097b2?w=900&h=900&fit=crop&auto=format',
-  premium: 'https://images.unsplash.com/photo-1764694187721-a5035d777fdf?w=900&h=900&fit=crop&auto=format',
-};
-
-const productImages: string[] = [
-  'https://images.unsplash.com/photo-1763503836825-97f5450d155a?w=400&h=400&fit=crop&auto=format',
-  'https://images.unsplash.com/photo-1550572017-4b7a301b9d81?w=400&h=400&fit=crop&auto=format',
-  'https://images.unsplash.com/photo-1768725844772-dc834990526f?w=400&h=400&fit=crop&auto=format',
-  'https://images.unsplash.com/photo-1765887986673-953fccf56464?w=400&h=400&fit=crop&auto=format',
-  'https://images.unsplash.com/photo-1655357443031-d5e0354b56e1?w=400&h=400&fit=crop&auto=format',
-];
+import { getKitImage, getProductImage } from '@/app/config/images';
 
 export function KitDetailsPage() {
   const { kitId } = useParams();
@@ -58,7 +44,12 @@ export function KitDetailsPage() {
   };
 
   const oneTimePrice = Math.round(kit.price * 1.15);
-  const galleryImages = [kitImages[kit.id], ...productImages.slice(0, 3)];
+  const galleryImages = [
+    getKitImage(kit.id, 'large'),
+    getProductImage(0, 'small'),
+    getProductImage(1, 'small'),
+    getProductImage(2, 'small'),
+  ];
 
   return (
     <div className="flex-1 bg-white">
@@ -197,7 +188,7 @@ export function KitDetailsPage() {
                 key={index}
                 name={product.name}
                 size={product.size}
-                imageUrl={productImages[index % productImages.length]}
+                imageUrl={getProductImage(index, 'small')}
                 included
               />
             ))}

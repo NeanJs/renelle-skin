@@ -21,6 +21,13 @@ export interface ProductLine {
   };
 }
 
+// Helper to get navigation lines (id, code, name)
+export const getNavigationLines = () => productLines.map(line => ({ 
+  id: line.id, 
+  code: line.code, 
+  name: line.name 
+}));
+
 export const productLines: ProductLine[] = [
   {
     id: "dsmo",

@@ -10,40 +10,12 @@ import {
 import { ImageWithFallback } from "@/app/components/figma/ImageWithFallback";
 import { LoadingSpinner } from "@/app/components/Loading";
 import { ChevronRight, Truck, Shield } from "lucide-react";
-
-// Sample product images — rotate by index
-const productImages = [
-  "https://images.unsplash.com/photo-1550572017-4b7a301b9d81?w=900&h=900&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1763503836825-97f5450d155a?w=900&h=900&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1768725844772-dc834990526f?w=900&h=900&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1765887986673-953fccf56464?w=900&h=900&fit=crop&auto=format",
-  "https://images.unsplash.com/photo-1655357443031-d5e0354b56e1?w=900&h=900&fit=crop&auto=format",
-];
-
-// Placeholder prices for individual products (prototype — from API in production)
-const basePrices: Record<string, number> = {
-  "Cream Cleanser": 38,
-  "Reset Serum": 52,
-  "Light Moisturiser": 58,
-  "Reset Toner": 32,
-  "Clarifying Cleanser": 34,
-  "BHA Exfoliating Toner": 36,
-  "Niacinamide Serum": 48,
-  "Oil-Control Moisturiser": 56,
-  "SPF 50 Matte Sunscreen": 44,
-  "Milk Cleanser": 38,
-  "Hydrating Essence": 42,
-  "HA Plumping Serum": 55,
-  "Rich Moisturiser": 60,
-  "SPF 30 Hydrating Sunscreen": 44,
-  "Peptide Cleanser": 42,
-  "Resurfacing Toner": 46,
-  "Firming Peptide Serum": 78,
-  "Lifting Moisturiser": 68,
-  "SPF 50+ Age Defence": 52,
-};
-
-const DEFAULT_PRICE = 45;
+import {
+  PRODUCT_PRICES,
+  DEFAULT_PRODUCT_PRICE,
+  calculateSubscriptionPrice,
+} from "@/app/lib/price-utils";
+import { getProductImage } from "@/app/config/images";
 
 export function ProductDetailPage() {
   const { lineId, kitType, productIndex } = useParams();
@@ -78,8 +50,8 @@ export function ProductDetailPage() {
     );
   }
 
-  const regularPrice = basePrices[product.name] ?? DEFAULT_PRICE;
-  const subscribePrice = Math.round(regularPrice * 0.85 * 100) / 100;
+  const regularPrice = PRODUCT_PRICES[product.name] ?? DEFAULT_PRODUCT_PRICE;
+  const subscribePrice = calculateSubscriptionPrice(regularPrice);
   const displayPrice = activePrice > 0 ? activePrice : regularPrice;
 
   const handleSelectionChange = (
@@ -149,7 +121,7 @@ export function ProductDetailPage() {
                 style={{ backgroundColor: `${line.secondaryColor}33` }}
               >
                 <ImageWithFallback
-                  src={productImages[idx % productImages.length]}
+                  src={getProductImage(idx, "large")}
                   alt={product.name}
                   className="w-full h-full object-cover"
                 />

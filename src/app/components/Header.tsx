@@ -2,21 +2,14 @@ import { Link, useLocation } from "react-router-dom";
 import { useState } from "react";
 import { ShoppingCart, User, Search, Menu, ChevronDown } from "lucide-react";
 import { Sheet, SheetContent, SheetTrigger } from "@/app/components/ui/sheet";
-
-const lines = [
-  { code: "DSMO", name: "Don't Stress Me Out", id: "dsmo" },
-  { code: "IDHTFT", name: "I Don't Have Time for This", id: "idhtft" },
-  { code: "ITCTC", name: "I'm Too Cute to Crack", id: "itctc" },
-  { code: "ELGOM", name: "Experience Looks Good on Me", id: "elgom" },
-  { code: "LDIT", name: "Lips Deserve It Too", id: "ldit" },
-  { code: "Universal", name: "All Lines Add-On", id: "universal" },
-];
+import { getNavigationLines } from "@/app/data/product-lines";
 
 export function Header() {
   const location = useLocation();
   const isAdmin = location.pathname.startsWith("/admin");
   const [mobileOpen, setMobileOpen] = useState(false);
   const [linesOpen, setLinesOpen] = useState(false);
+  const lines = getNavigationLines();
 
   if (isAdmin) {
     return (
