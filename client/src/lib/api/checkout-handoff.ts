@@ -6,25 +6,23 @@ export interface CheckoutHandoffResponse {
 }
 
 export async function createCheckoutHandoff(cartToken: string) {
-  const token = localStorage.getItem("token");
-
-  if (!token) {
-    throw new Error("Authorization token missing");
-  }
-
   if (!cartToken) {
     throw new Error("Cart token missing");
   }
 
+  const token = localStorage.getItem("token");
+
+  const config = {
+    headers: {
+      "Cart-Token": cartToken,
+      ...(token ? { Authorization: `Bearer ${token}` } : {}),
+    },
+  };
+
   const { data } = await api.post<CheckoutHandoffResponse>(
     "/checkout-handoff",
     {},
-    {
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Cart-Token": cartToken,
-      },
-    },
+    config,
   );
 
   return data;

@@ -170,7 +170,7 @@ export function ConfirmationPage() {
       : null;
 
   const isAutoReplenish = order.purchase_type === "subscription";
-
+  const isGuest = localStorage.getItem("token");
   const nextBillingDate = isAutoReplenish
     ? calculateNextBillingDate(order.created_at, order.replenishment_interval)
     : null;
@@ -512,16 +512,17 @@ export function ConfirmationPage() {
           {/* Actions */}
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button
-              asChild
-              className="
-                flex-1
-                bg-foreground
-                hover:bg-foreground/85
-              "
-            >
-              <Link to="/account">View My Account</Link>
-            </Button>
+            {isGuest ? (
+              <Button asChild className="flex-1">
+                <Link to={`/confirmation?order_id=${order.id}&key=${orderKey}`}>
+                  View Order
+                </Link>
+              </Button>
+            ) : (
+              <Button asChild className="flex-1">
+                <Link to="/account">View My Account</Link>
+              </Button>
+            )}
 
             <Button asChild variant="outline" className="flex-1">
               <Link to="/">Return Home</Link>
